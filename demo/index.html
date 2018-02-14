@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>ServerDirectPrint</title>
+    <!-- CSS -->
+    <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.18.custom.css" rel="stylesheet" />
+    <!-- Script -->
+    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
+    <script type="text/javascript">
+        function updateResult() {
+            $("#updateResultPrint").load("include/functions.php", {
+                functionName: "updateResultPrint"
+            }, function() {
+            });
+        }
+        
+        $(function () {
+            // Accordion
+            $('#orderResult').accordion({
+                header: "h3",
+                autoHeight: false 
+            });
+
+            setInterval("updateResult()", 1000);
+
+            // button
+            $('#order').button();
+        });
+
+        // Entry
+        function orderEntry() {
+            $.post("include/functions.php", {
+                functionName: "copyFile"
+            }, function() {
+                $('#orderResult').sameHeight();
+            });
+        }
+    </script>
+	    
+    <style type="text/css">
+        body{ font: 120% "Trebuchet MS", sans-serif; margin: 50px;}
+    </style>
+</head>
+
+<body>
+    <div class="ui-widget">
+        <div class="ui-widget-header" style="font-size:24pt;">Server Direct Print</div>
+        <div class="ui-widget-content" style="text-align:center;">
+            <p>&nbsp;</p>
+            <p><button id="order" onclick="orderEntry()" style="font-size:24pt;width:80%;">Order Entry</button></p>
+            <p>&nbsp;</p>
+        </div>
+
+        <br>
+        <div id="orderResult">
+            <div>
+                <h3><a href="#">Print Result</a></h3>
+                <div id="updateResultPrint"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
